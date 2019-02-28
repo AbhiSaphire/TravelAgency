@@ -66,7 +66,7 @@ void AccessGrant(){
 		++i;
 	}
 	cout<<endl;
-	mycheck=check(pwd,def);
+	mycheck = check(pwd,def);
 	if(mycheck == 1){
 		pattern_spaces (4); cout<<"CORRECT PASSWORD"<<endl;
 		pattern_spaces (4); pattern_line (60);
@@ -90,21 +90,21 @@ void printStrongNess(string& input){
             hasUpper = true;
         if (isdigit(input[i]))
             hasDigit = true;
-
         size_t special = input.find_first_not_of(normalChars);
         if (special != string::npos)
             specialChar = true;
     }
     // Strength of password
     cout <<"Strength of password:-";
-    if (hasLower && hasUpper && hasDigit &&
-        specialChar && (n >= 8))
-        cout << "Strong" << endl;
-    else if ((hasLower || hasUpper) &&
-             specialChar && (n >= 6))
-        cout << "Moderate" << endl;
-    else
-        cout << "Weak" << endl;
+    if (hasLower && hasUpper && hasDigit && specialChar && (n >= 8)){
+        pattern_spaces (4); cout << "Strong" << endl;
+    }
+    else if ((hasLower || hasUpper) && specialChar && (n >= 6)){
+        pattern_spaces (4); cout << "Moderate" << endl;
+    }
+    else{
+        pattern_spaces (4); cout << "Weak" << endl;
+    }
 }
 
 //------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -113,181 +113,170 @@ void printStrongNess(string& input){
 class travel_agency{
 public:
 	char username[40], name[40], reservation[30], hotels[30], bankaccountDetails[50], city[30], state[30], country [30], places[30], phone[10];
-	string Password, email, city_code;
-	int choice, rating;
+	string Password, email, city_code, city_code_P;
+	int choice, rating, i;
 	float Fare_Charges;
 
-   virtual void accept() = 0;
-   virtual void display() = 0;
+   	virtual void accept() = 0;
+   	virtual void display() = 0;
 };
 
 class admin : public travel_agency{
 public:
-   void accept(){
-   	pattern_spaces (4); pattern_line (60);
-	pattern_spaces (4); pattern_line (60);
-	pattern_spaces (11); cout<<"WELCOME ADMIN"<<endl;
-	pattern_spaces (4); cout<<"ENTER USERNAME : "; cin>>username; cout<<endl;
-	pattern_spaces (4); cout<<"ENTER NAME : "; cin>>name; cout<<endl;
-	AccessGrant();
-   }
-   void display(){
-   	header(2);
-   	pattern_spaces (4); cout<<"1. MODIFY PACKAGES"<<endl; pattern_spaces (4); cout<<"2. MODIFY DESTINATIONS"<<endl;
-   	pattern_spaces (4); cout<<"3. VIEW CUSTOMER RECORDS"<<endl; pattern_spaces (4); cout<<"4. EXIT"; cin>>choice;
-   	switch (choice){
-   		case 1:
-   			break;
-   		case 2:
-   			break;
-   		case 3:
-   			break;
-   		case 4:
-   			exit(0);
+   	void accept(){
+   		pattern_spaces (4); pattern_line (60);
+		pattern_spaces (4); pattern_line (60);
+		pattern_spaces (11); cout<<"WELCOME ADMIN"<<endl;
+		pattern_spaces (4); cout<<"ENTER USERNAME : "; cin>>username; cout<<endl;
+		pattern_spaces (4); cout<<"ENTER NAME : "; cin>>name; cout<<endl;
+		AccessGrant();
    	}
-   }
+   	void display(){
+   		header(2);
+   		pattern_spaces (4); cout<<"1. MODIFY PACKAGES"<<endl; pattern_spaces (4); cout<<"2. MODIFY DESTINATIONS"<<endl;
+   		pattern_spaces (4); cout<<"3. VIEW CUSTOMER RECORDS"<<endl; pattern_spaces (4); cout<<"4. EXIT"; cin>>choice;
+   		switch (choice){
+   			case 1:
+   				break;
+   			case 2:
+   				break;
+   			case 3:
+   				break;
+   			case 4:
+   				exit(0);
+   		}
+   	}
 };
 
 class customer : public travel_agency{
 public:
-   void accept(){
-  	pattern_spaces (4); pattern_line (60);
-	pattern_spaces (4); pattern_line (60);
-	pattern_spaces (11); cout<<"WELCOME CUSTOMER"<<endl;
-	pattern_spaces (4); cout<<"ENTER USERNAME : "; cin>>username; cout<<endl;
-	pattern_spaces (4); cout<<"ENTER NAME : "; cin>>name; cout<<endl;
-	pattern_spaces (4); cout<<"ENTER EMAIL ID : "; cin>>email; cout<<endl;
-	pattern_spaces (4); cout<<"ENTER PHONE NUMBER : "; cin>>phone; cout<<endl;
-   }
-   void display(){
-   	header(2);
-   	pattern_spaces (4); cout<<"1. NATIONAL DESTINATION TOURISM"<<endl; pattern_spaces (4); cout<<"2. INTERNATIONAL DESTINATIONS TOURISM"<<endl;
-   	pattern_spaces (4); cout<<"3. OR SELECT OUR WORLD CLASS PACKAGES JUST FOR YOU"<<endl; pattern_spaces (4); cout<<"4. EXIT"; cin>>choice;
-   	switch (choice){
-   		case 1:
-   			break;
-   		case 2:
-   			break;
-   		case 3:
-   			break;
-   		case 4:
-   			exit(0);
+   	void accept(){
+	  	pattern_spaces (4); pattern_line (60);
+		pattern_spaces (4); pattern_line (60);
+		pattern_spaces (11); cout<<"WELCOME CUSTOMER"<<endl;
+		pattern_spaces (4); cout<<"ENTER USERNAME : "; cin>>username; cout<<endl;
+		pattern_spaces (4); cout<<"ENTER NAME : "; cin>>name; cout<<endl;
+		pattern_spaces (4); cout<<"ENTER EMAIL ID : "; cin>>email; cout<<endl;
+		pattern_spaces (4); cout<<"ENTER PHONE NUMBER : "; cin>>phone; cout<<endl;
+		pattern_spaces (4); cout<<"ENTER PASSWORD : "; cin>>Password; printStrongNess(Password);
+	}
+   	void display(){
+   		header(2);
+   		pattern_spaces (4); cout<<"1. NATIONAL DESTINATION TOURISM"<<endl; pattern_spaces (4); cout<<"2. INTERNATIONAL DESTINATIONS TOURISM"<<endl;
+   		pattern_spaces (4); cout<<"3. OR SELECT OUR WORLD CLASS PACKAGES JUST FOR YOU"<<endl; pattern_spaces (4); cout<<"4. EXIT"; cin>>choice;
+   		switch (choice){
+   			case 1:
+   				break;
+  	 		case 2:
+   				break;
+   			case 3:
+   				break;
+   			case 4:
+   				exit(0);
+   		}
    	}
-   }
 };
 
 class destination : public customer, public admin{
 public:
-   void show_nationalDest(){
-   	pattern_spaces (4); pattern_line (60); pattern_spaces (4); pattern_line (60);
-   	pattern_spaces (12); cout<<"INDIA"<<endl; pattern_spaces (4); pattern_line (60);
-   	pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(15)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"1. MUM001"<<setw(15)<<"MUMBAI"<<setw(30)<<"10.0"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"2. DEL100"<<setw(15)<<"DELHI"<<setw(30)<<"9.2"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"3. KOL001"<<setw(15)<<"KOLKATA"<<setw(30)<<"7.9"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"4. CHE001"<<setw(15)<<"CHENNAI"<<setw(30)<<"8.7"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"5. BANG001"<<setw(15)<<"BANG"<<setw(30)<<"9.1"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"6. AGR100"<<setw(15)<<"AGRA"<<setw(30)<<"8.9"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"7. KERA001"<<setw(15)<<"KERALA"<<setw(30)<<"8.8"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"8. GOA102"<<setw(15)<<"GOA"<<setw(30)<<"9.7"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"9. JAI109"<<setw(15)<<"JAIPUR"<<setw(30)<<"8"<<endl;
-   }
-   void show_internationalDest(){
-   	pattern_spaces (4); pattern_line (60); pattern_spaces (4); pattern_line (60);
-   	pattern_spaces (11); cout<<"INTERNATIONAL"<<endl; pattern_spaces (4); pattern_line (60);
-   	pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(30)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"1. USA001"<<setw(30)<<"UNITED STATES OF AMERICA"<<setw(30)<<"10.0"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"2. UK100"<<setw(30)<<"UNITED KINGDOM"<<setw(30)<<"9.2"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"3. FRA001"<<setw(30)<<"FRANCE"<<setw(30)<<"7.9"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"4. GER001"<<setw(30)<<"GERMANY"<<setw(30)<<"8.7"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"5. SPA001"<<setw(30)<<"SPAIN"<<setw(30)<<"9.1"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"6. GREE100"<<setw(30)<<"GREECE"<<setw(30)<<"8.9"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"8. AUS102"<<setw(30)<<"AUSTRALIA"<<setw(30)<<"9.7"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"9. NEW109"<<setw(30)<<"NEW ZEALAND"<<setw(30)<<"8"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"9. RUS109"<<setw(30)<<"RUSSIA"<<setw(30)<<"8"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"9. THAI109"<<setw(30)<<"THAILAND"<<setw(30)<<"8.9"<<endl;
-	pattern_spaces (4); cout<<setw(15)<<"9. BANG109"<<setw(30)<<"BANGKOK"<<setw(30)<<"8"<<endl;
-   }
-   void get_destination(){
-   	pattern_spaces (4); pattern_line (60);
-   	pattern_spaces (4); cout<<"ENTER CITY CODE : ";
-   }
+	friend void payment_from_Dest(city_code);
+   	void show_nationalDest(){
+   		ofstream national ("nationalDest.txt");
+   		if (national.good()){
+   			i = 1;
+   			pattern_spaces (4); pattern_line (60); pattern_spaces (4); pattern_line (60);
+			pattern_spaces (12); cout<<"INDIA"<<endl; pattern_spaces (4); pattern_line (60);
+			pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(15)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
+   			while (national >> city_code >> city >> rating >> price >> getline(info)){
+				pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(15)<<city<<setw(30)<<rating<<endl;
+				i++;
+			}
+		}
+		else{
+			pattern_spaces (4); pattern_line (60);
+			pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+		}
+   	}
+   	void show_internationalDest(){
+   		ofstream international ("internationalDest.txt");
+   		if (internationalDest.good()){
+   			i = 1;
+		   	pattern_spaces (4); pattern_line (60); pattern_spaces (4); pattern_line (60);
+		   	pattern_spaces (11); cout<<"INTERNATIONAL"<<endl; pattern_spaces (4); pattern_line (60);
+		   	pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(30)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
+		   	while (international >> city_code >> city >> rating >> price >> getline(info)){
+		   		pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(30)<<city<<setw(30)<<rating<<endl;
+				i++;
+			}
+		}
+		else{
+			pattern_spaces (4); pattern_line (60);
+			pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+		}
+	}
+   	void get_nationalDest(){
+	   	ofstream national ("nationalDest.txt");
+	   	if (national.good()){
+		   	pattern_spaces (4); pattern_line (60);
+		   	pattern_spaces (4); cout<<"ENTER CITY CODE : "; cin>>city_code_P;
+		   	while (national >> city_code >> city >> ratings >> price >> info){
+		   		if (city_code_P == city_code){
+		   			pattern_spaces (4); pattern_line (60);
+		   			pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(15)<<"CITY"<<setw(30)<<"RATINGS"<<setw(10)<<"PRICE"<<setw(30)<<"DETAILS"<<endl;
+		   			pattern_spaces (4); cout<<setw(15)<<city_code<<setw(15)<<city<<setw(30)<<rating<<setw(10)<<price<<setw(30)<<info<<endl<<endl;
+		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"<<endl; cin>>choice;
+		   		}
+		   	}
+		}
+		else{
+			pattern_spaces (4); pattern_line (60);
+			pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+		}
+   	}
+   	void get_internationalDest(){
+   		ofstream international ("internationalDest.txt");
+	   	if (international.good()){
+		   	pattern_spaces (4); pattern_line (60);
+		   	pattern_spaces (4); cout<<"ENTER CITY CODE : "; cin>>city_code_P;
+		   	while (international >> city_code >> city >> ratings >> price >> info){
+		   		if (city_code_P == city_code){
+		   			pattern_spaces (4); pattern_line (60);
+		   			pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(15)<<"CITY"<<setw(30)<<"RATINGS"<<setw(10)<<"PRICE"<<setw(30)<<"DETAILS"<<endl;
+		   			pattern_spaces (4); cout<<setw(15)<<city_code<<setw(15)<<city<<setw(30)<<rating<<setw(10)<<price<<setw(30)<<info<<endl<<endl;
+		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"<<endl; cin>>choice;
+		   		}
+		   	}
+		}
+		else{
+			pattern_spaces (4); pattern_line (60);
+			pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+		}
+   	}
 };
 
-class  packages:public travel_agency
-{
+class  packages : public travel_agency{
 public:
-float Fare_Charges;
-char Reservation[30],hotels[30],cities[30],luxury[30];
-int Duration;
-void accept4();
-void display4();
+	void show_packages(){
+		ofstream package ("packages.txt");
+	   	if (package.good()){
+	   		i = 1;
+			pattern_spaces (4); pattern_line (60);
+   			pattern_spaces (10); cout<<"PACKAGES JUST FOR YOU"<<endl; pattern_spaces (4); pattern_line (60);
+   			while (package >> package_type >> package_time >> package_price){
+				pattern_spaces (4); cout<<setw(3)<<i<<setw(20)<<package_type<<setw(30)<<package_time<<setw(6)<<package_price<<endl;
+				i++;
+			}
+		}
+	}
 };
-void packages::accept4()
-{
-cout<<"\n                                      ********************************************                        **********************************************:";
-cout<<"\n                                      *************************                        PACKAGES ENTRIES                            *********************:";
-cout<<"\n                                      ********************************************                        **********************************************:";
-cout<<"\n\n                                                                                Enter fare charges:-";
-cin>>Fare_Charges;
-cout<<"                                                                                    Enter Reservation:-";
-cin>>Reservation;
-cout<<"                                                                                    Enter hotels:-";
-cin>>hotels;
-cout<<"                                                                                    Enter cities:-";
-cin>>cities;
-cout<<"                                                                                    Enter luxury:-";
-cin>>luxury;
-}
-void packages::display4()
-{
-cout<<"                                       *******************************************************************************************************************";
-cout<<"\n                                     ********************************************                        **********************************************:";
-cout<<"\n                                     *************************                   WELCOME TO TRAVEL AGENCY                     *************************:";
-cout<<"\n                                     ********************************************                        **********************************************:";
-cout<<"\n                                     ******************************************************************************************************************:";
-cout<<"\n\n                                                                            Enter fare charges:"<<Fare_Charges<<endl;
-cout<<"                                                                                Enter reservation:"<<Reservation<<endl;
-cout<<"                                                                                Enter hotels:"<<hotels<<endl;
-cout<<"                                                                                Enter cities:"<<cities<<endl;
-cout<<"                                                                                Enter luxury:"<<luxury<<endl;
-}
-class payment:public travel_agency
-{
-public:
-   char BankAccount_Details[30],Debit[30], credit[30], Net_Banking[30], E_wallet[30];
-   void accept5();
-   void display5();
-};
-void payment::accept5()
-{
-cout<<"\n                                      ********************************************                        **********************************************:";
-cout<<"\n                                      *************************                        PAYMENTS ENTRIES                            *************************:";
-cout<<"\n                                      ********************************************                        **********************************************:";
-cout<<"\n\n                                                                             Enter bank account details:-";
-cin>>BankAccount_Details;
-cout<<"                                                                                 Enter debit details:-";
-cin>>Debit;
-cout<<"                                                                                 Enter credit details:-";
-cin>>credit;
-cout<<"                                                                                 Enter net banking details:-";
-cin>>Net_Banking;
-cout<<"                                                                                 Enter E-wallet details:-";
-cin>>E_wallet;
-}
-void payment::display5()
-{
 
-cout<<"                                       *******************************************************************************************************************";
-cout<<"\n                                     ********************************************                        **********************************************:";
-cout<<"\n                                     *************************                   WELCOME TO TRAVEL AGENCY                     *************************:";
-cout<<"\n                                     ********************************************                        **********************************************:";
-cout<<"\n                                     ******************************************************************************************************************:";
-cout<<"\n\n                                                                            Enter bank account details:"<<BankAccount_Details<<endl;
-cout<<"                                                                                Enter credit details:"<<credit<<endl;
-cout<<"                                                                                Enter net banking details:"<<Net_Banking<<endl;
-cout<<"                                                                                Enter E-wallet details:"<<E_wallet<<endl;
-}
+
+class payment : public travel_agency{
+public:
+	void show_payment_methods(){
+
+	}
+}; 
 
 
 int main(){
