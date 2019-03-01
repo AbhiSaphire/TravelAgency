@@ -1,10 +1,10 @@
-VOLVO 5 days and 4 nights
-SUPIRIER 5 days and 4 nights
-LUXURY 5 days and 4 nights
-BUSINESS 5 days and 4 nights
-VOLVO 7 days and 6 nights
-SUPIRIER 7 days and 6 nights
-LUXURY 7 days and 6 nights
-BUSINESS 7 days and 6 nights
-HONEYMOON SUITE 5 days and 4 nights
-HONEYMOON SUITE 7 days and 6 nights
+VOL5 VOLVO 5 days and 4 nights 5000
+SUP5 SUPIRIER 5 days and 4 nights 6000
+LUX5 LUXURY 5 days and 4 nights 7500
+BUS5 BUSINESS 5 days and 4 nights 10000
+VOL7 VOLVO 7 days and 6 nights 7000
+SUP7 SUPIRIER 7 days and 6 nights 8000
+LUX7 LUXURY 7 days and 6 nights 9500
+BUS7 BUSINESS 7 days and 6 nights 13000
+HON5 HONEYMOON SUITE 5 days and 4 nights 15000
+HON7 HONEYMOON SUITE 7 days and 6 nights 19000
