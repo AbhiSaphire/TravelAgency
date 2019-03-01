@@ -112,17 +112,23 @@ void printStrongNess(string& input){
 
 class travel_agency{
 public:
-	char username[40], name[40], reservation[30], hotels[30], bankaccountDetails[50], city[30], state[30], country [30], places[30], phone[10];
-	string Password, email, city_code, city_code_P;
-	int choice, rating, i;
-	float Fare_Charges;
+	char username[40], name[40], reservation[30], hotels[30], bankaccountDetails[50], city[30], state[30], country [30], places[30], phone[10], package_type[20], package_time[30];
+	char phone[10];
+	string Password, email, city_code, city_code_P, info;
+	int choice, rating, package_price, price, debit, i;
 
    	virtual void accept() = 0;
    	virtual void display() = 0;
+	friend void payment_mode(string&, int);
 };
 
 class admin : public travel_agency{
 public:
+	void modify_package ();
+	void modify_nationalDest ();
+	void modify_internationalDest ();
+	void view_cutomer_details ();
+
    	void accept(){
    		pattern_spaces (4); pattern_line (60);
 		pattern_spaces (4); pattern_line (60);
@@ -136,13 +142,20 @@ public:
    		pattern_spaces (4); cout<<"1. MODIFY PACKAGES"<<endl; pattern_spaces (4); cout<<"2. MODIFY DESTINATIONS"<<endl;
    		pattern_spaces (4); cout<<"3. VIEW CUSTOMER RECORDS"<<endl; pattern_spaces (4); cout<<"4. EXIT"; cin>>choice;
    		switch (choice){
-   			case 1:
+   			case 1:	modify_package();
    				break;
-   			case 2:
+   			case 2:	pattern_spaces (4); cout<<"1. NATIONAL"<<endl; pattern_spaces (4); cout<<"2. INTERNATIONAL"; cin>>ch; cout<<endl;
+   				switch (ch){
+   					case 1 :	modify_nationalDest();
+   						break;
+   					case 2 :	modify_internationalDest();
+   						break;
+   					default :	pattern_spaces (4); cout<<"WRONG CHOICE>>>";
+   				}
    				break;
-   			case 3:
+   			case 3:	view_cutomer_details();
    				break;
-   			case 4:
+   			case 4:	pattern_spaces (4); cout<<">>>>>>>>>>>   EXITING   >>>>>>>"; pattern_spaces (4); pattern_line (60);
    				exit(0);
    		}
    	}
@@ -150,6 +163,21 @@ public:
 
 class customer : public travel_agency{
 public:
+
+	friend void show_nationalDest();
+	friend void show_internationalDest();
+	friend void show_packages();
+
+	void print_customer_details(char username, char name; char email; char phone; string& Password; int debit){
+		ofstream customer("customerDetails.txt");
+		if (customer.good()){
+			customer << username << " " << name << " " << email << " " << phone << " " << Password << " " << debit << endl;
+		}
+		else{
+			pattern_spaces (4); pattern_line (60);
+			pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+		}
+	}
    	void accept(){
 	  	pattern_spaces (4); pattern_line (60);
 		pattern_spaces (4); pattern_line (60);
@@ -159,19 +187,21 @@ public:
 		pattern_spaces (4); cout<<"ENTER EMAIL ID : "; cin>>email; cout<<endl;
 		pattern_spaces (4); cout<<"ENTER PHONE NUMBER : "; cin>>phone; cout<<endl;
 		pattern_spaces (4); cout<<"ENTER PASSWORD : "; cin>>Password; printStrongNess(Password);
+		pattern_spaces (4); cout<<"ENTER HOW MUCH DEBIT YOU HAVE : "; cin>>debit;
+		print_customer_details(username, name, email, phone, Password, debit);
 	}
    	void display(){
    		header(2);
    		pattern_spaces (4); cout<<"1. NATIONAL DESTINATION TOURISM"<<endl; pattern_spaces (4); cout<<"2. INTERNATIONAL DESTINATIONS TOURISM"<<endl;
    		pattern_spaces (4); cout<<"3. OR SELECT OUR WORLD CLASS PACKAGES JUST FOR YOU"<<endl; pattern_spaces (4); cout<<"4. EXIT"; cin>>choice;
    		switch (choice){
-   			case 1:
+   			case 1:	show_nationalDest ();
    				break;
-  	 		case 2:
+  	 		case 2:	show_internationalDest ();
    				break;
-   			case 3:
+   			case 3:	show_packages ();
    				break;
-   			case 4:
+   			case 4:	pattern_spaces (4); cout<<">>>>>>>>>>>   EXITING   >>>>>>>"; pattern_spaces (4); pattern_line (60);
    				exit(0);
    		}
    	}
@@ -179,9 +209,8 @@ public:
 
 class destination : public customer, public admin{
 public:
-	friend void payment_from_Dest(city_code);
    	void show_nationalDest(){
-   		ofstream national ("nationalDest.txt");
+   		ifstream national ("nationalDest.txt");
    		if (national.good()){
    			i = 1;
    			pattern_spaces (4); pattern_line (60); pattern_spaces (4); pattern_line (60);
@@ -191,10 +220,12 @@ public:
 				pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(15)<<city<<setw(30)<<rating<<endl;
 				i++;
 			}
+			get_nationalDest();
 		}
 		else{
 			pattern_spaces (4); pattern_line (60);
 			pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+			return;
 		}
    	}
    	void show_internationalDest(){
@@ -208,10 +239,12 @@ public:
 		   		pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(30)<<city<<setw(30)<<rating<<endl;
 				i++;
 			}
+			get_internationalDest();
 		}
 		else{
 			pattern_spaces (4); pattern_line (60);
 			pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+			return;
 		}
 	}
    	void get_nationalDest(){
@@ -224,13 +257,18 @@ public:
 		   			pattern_spaces (4); pattern_line (60);
 		   			pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(15)<<"CITY"<<setw(30)<<"RATINGS"<<setw(10)<<"PRICE"<<setw(30)<<"DETAILS"<<endl;
 		   			pattern_spaces (4); cout<<setw(15)<<city_code<<setw(15)<<city<<setw(30)<<rating<<setw(10)<<price<<setw(30)<<info<<endl<<endl;
-		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"<<endl; cin>>choice;
+		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"; cin>>choice; cout<<endl;
+		   			if (choice == 1){
+		   				payment_mode(city_code, package_price);
+		   				return;
+		   			}
 		   		}
 		   	}
 		}
 		else{
 			pattern_spaces (4); pattern_line (60);
 			pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+			return;
 		}
    	}
    	void get_internationalDest(){
@@ -243,18 +281,23 @@ public:
 		   			pattern_spaces (4); pattern_line (60);
 		   			pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(15)<<"CITY"<<setw(30)<<"RATINGS"<<setw(10)<<"PRICE"<<setw(30)<<"DETAILS"<<endl;
 		   			pattern_spaces (4); cout<<setw(15)<<city_code<<setw(15)<<city<<setw(30)<<rating<<setw(10)<<price<<setw(30)<<info<<endl<<endl;
-		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"<<endl; cin>>choice;
+		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"; cin>>choice; cout<<endl;
+		   			if (choice == 1){
+		   				payment_mode(city_code, package_price);
+		   				return;
+		   			}
 		   		}
 		   	}
 		}
 		else{
 			pattern_spaces (4); pattern_line (60);
 			pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+			return;
 		}
    	}
 };
 
-class  packages : public travel_agency{
+class  packages : public customer, public admin{
 public:
 	void show_packages(){
 		ofstream package ("packages.txt");
@@ -262,21 +305,40 @@ public:
 	   		i = 1;
 			pattern_spaces (4); pattern_line (60);
    			pattern_spaces (10); cout<<"PACKAGES JUST FOR YOU"<<endl; pattern_spaces (4); pattern_line (60);
-   			while (package >> package_type >> package_time >> package_price){
-				pattern_spaces (4); cout<<setw(3)<<i<<setw(20)<<package_type<<setw(30)<<package_time<<setw(6)<<package_price<<endl;
+   			pattern_spaces (4); cout<<setw(13)<<"PACKAGE CODE"<<setw(20)<<"PACKAGE TYPE"<<setw(30)<<"PACKAGE TIME"<<setw(6)<<"PRICE"<<endl;
+   			pattern_spaces (4); pattern_line (60);
+   			while (package >> city_code >> package_type >> package_time >> package_price){
+				pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(20)<<package_type<<setw(30)<<package_time<<setw(6)<<package_price<<endl;
 				i++;
+			}
+			pattern_spaces (4); pattern_line (60);
+			pattern_spaces (4); cout<<"CHOOSE YOUR PACKAGE :: ENTER PACKAGE CODE : "; cin>>city_code_P; cout<<endl;
+			while (package >> city_code >> package_type >> package_time >> package_price){
+				if (city_code_P == city_code){
+					pattern_spaces (4); pattern_line (60);
+					pattern_spaces (4); cout<<setw(13)<<"PACKAGE CODE"<<setw(20)<<"PACKAGE TYPE"<<setw(30)<<"PACKAGE TIME"<<setw(6)<<"PRICE"<<endl;
+					pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(20)<<package_type<<setw(30)<<package_time<<setw(6)<<package_price<<endl;
+					pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"; cin>>choice; cout<<endl;
+		   			if (choice == 1){
+		   				payment_mode(city_code, package_price);
+		   				return;
+		   			}
+				}
 			}
 		}
 	}
 };
 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
 
-class payment : public travel_agency{
-public:
-	void show_payment_methods(){
+void payment_mode(string& city_code, int n){
+	fstream customer("customerDetails.txt");
+	customer
+}
 
-	}
-}; 
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 int main(){
