@@ -259,7 +259,7 @@ public:
 		   			pattern_spaces (4); cout<<setw(15)<<city_code<<setw(15)<<city<<setw(30)<<rating<<setw(10)<<price<<setw(30)<<info<<endl<<endl;
 		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"; cin>>choice; cout<<endl;
 		   			if (choice == 1){
-		   				payment_mode(city_code, package_price);
+		   				payment_mode(package_price);
 		   				return;
 		   			}
 		   		}
@@ -283,7 +283,7 @@ public:
 		   			pattern_spaces (4); cout<<setw(15)<<city_code<<setw(15)<<city<<setw(30)<<rating<<setw(10)<<price<<setw(30)<<info<<endl<<endl;
 		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"; cin>>choice; cout<<endl;
 		   			if (choice == 1){
-		   				payment_mode(city_code, package_price);
+		   				payment_mode(package_price);
 		   				return;
 		   			}
 		   		}
@@ -320,7 +320,7 @@ public:
 					pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(20)<<package_type<<setw(30)<<package_time<<setw(6)<<package_price<<endl;
 					pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"; cin>>choice; cout<<endl;
 		   			if (choice == 1){
-		   				payment_mode(city_code, package_price);
+		   				payment_mode(package_price);
 		   				return;
 		   			}
 				}
@@ -332,9 +332,11 @@ public:
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
-void payment_mode(string& city_code, int n){
+void payment_mode(int n){
 	fstream customer("customerDetails.txt");
-	customer
+	while (customer >> username >> name >> email >> phone >> Password >> debit){
+		debit -= n;
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
