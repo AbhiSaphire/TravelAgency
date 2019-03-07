@@ -143,7 +143,7 @@ public:
 				if (package.good()){
 					i = 1;
 					while (package >> city_code >> package_type >> package_time >> package_price){
-						pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(20)<<package_type<<setw(30)<<package_time<<setw(6)<<package_price<<endl;
+						pattern_spaces (4); cout<<setw(3)<<i<<setw(20)<<city_code<<setw(30)<<package_type<<setw(30)<<package_time<<setw(10)<<package_price<<endl;
 						i++;
 					}
 				}
@@ -154,13 +154,15 @@ public:
                 }
 				break;
 			case 2:	{
-			    ofstream package ("packages.txt");
+			    ofstream package;
+			    package.open("packages.txt", ios_base::app);
 				if (package.good()){
 					pattern_spaces (4); cout<<"PACKAGE CODE : "; cin>>city_code; cout<<endl;
 					pattern_spaces (4); cout<<"PACKAGE TYPE : "; cin>>package_type; cout<<endl;
 					pattern_spaces (4); cout<<"PACKAGE TIME : "; cin>>package_time; cout<<endl;
 					pattern_spaces (4); cout<<"PACKAGE PRICE : "; cin>>package_price; cout<<endl;
 					package << city_code << " " << package_type << " " << package_time << " " << package_price << endl;
+					pattern_spaces (8); cout<<"-----ENTRY FILLED-----"<<endl;
 				}
 				else{
 					pattern_spaces (4); pattern_line (60);
@@ -176,17 +178,34 @@ public:
 		pattern_spaces (4); cout<<"2. ADD NEW DESTINATIONS : "; cin>>op;
 		switch(op){
 			case 1:	{
-			    void show_nationalDest();
+			    ifstream national ("nationalDest.txt");
+		   		if (national.good()){
+		   			i = 1;
+		   			pattern_spaces (4); pattern_line (60); pattern_spaces (4); pattern_line (60);
+					pattern_spaces (10); cout<<"INDIA"<<endl; pattern_spaces (4); pattern_line (60);
+					pattern_spaces (4); cout<<setw(8)<<"SNo"<<setw(20)<<"CITY CODE"<<setw(20)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
+		   			while (national >> city_code >> city >> rating >> price){
+						pattern_spaces (4); cout<<setw(8)<<i<<setw(20)<<city_code<<setw(20)<<city<<setw(30)<<rating<<endl;
+						i++;
+					}
+				}
+				else{
+					pattern_spaces (4); pattern_line (60);
+					pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+					return;
+				}
                 }
 				break;
 			case 2:	{
-			    ofstream national("nationalDest.txt");
+			    ofstream national;
+			    national.open("nationalDest.txt", ios_base::app);
 				if (national.good()){
 					pattern_spaces (4); cout<<"CITY CODE : "; cin>>city_code; cout<<endl;
 					pattern_spaces (4); cout<<"CITY : "; cin>>city; cout<<endl;
 					pattern_spaces (4); cout<<"RATINGS : "; cin>>rating; cout<<endl;
 					pattern_spaces (4); cout<<"PRICE : "; cin>>price; cout<<endl;
 					national << city_code << " " << city << " " << rating << " " << price <<endl;
+					pattern_spaces (8); cout<<"-----ENTRY FILLED-----"<<endl;
 				}
 				else{
 					pattern_spaces (4); pattern_line (60);
@@ -202,17 +221,34 @@ public:
 		pattern_spaces (4); cout<<"2. ADD NEW DESTINATIONS : "; cin>>op;
 		switch(op){
 			case 1:{
-			    void show_internationalDest();
+			    ifstream international ("internationalDest.txt");
+		   		if (international.good()){
+		   			i = 1;
+				   	pattern_spaces (4); pattern_line (60); pattern_spaces (4); pattern_line (60);
+				   	pattern_spaces (11); cout<<"INTERNATIONAL"<<endl; pattern_spaces (4); pattern_line (60);
+				   	pattern_spaces (4); cout<<setw(8)<<"S No"<<setw(20)<<"CITY Code"<<setw(30)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
+				   	while (international >> city_code >> city >> rating >> price){
+				   		pattern_spaces (4); cout<<setw(8)<<i<<setw(20)<<city_code<<setw(30)<<city<<setw(30)<<rating<<endl;
+						i++;
+					}
+				}
+				else{
+					pattern_spaces (4); pattern_line (60);
+					pattern_spaces (4); cout<<"SORRY CONNECTION NOT BUILD PROPERLY...  BAD DAY :-( ";
+					return;
+				}
                 }
 				break;
 			case 2:	{
-			    ofstream international("internationalDest.txt");
+			    ofstream international;
+			    international.open("internationalDest.txt", ios_base::app);
 				if (international.good()){
 					pattern_spaces (4); cout<<"CITY CODE : "; cin>>city_code; cout<<endl;
 					pattern_spaces (4); cout<<"CITY : "; cin>>city; cout<<endl;
 					pattern_spaces (4); cout<<"RATINGS : "; cin>>rating; cout<<endl;
 					pattern_spaces (4); cout<<"PRICE : "; cin>>price; cout<<endl;
 					international << city_code << " " << city << " " << rating << " " << price << endl;
+					pattern_spaces (8); cout<<"-----ENTRY FILLED-----"<<endl;
 				}
 				else{
 					pattern_spaces (4); pattern_line (60);
@@ -226,9 +262,9 @@ public:
 	void view_cutomer_details (){
 		ifstream customer("customerDetails.txt");
 		if (customer.good()){
-			pattern_spaces (4); cout<<setw(15)<<"USERNAME"<<setw(15)<<"NAME"<<setw(20)<<"PHONE NUMBER"<<setw(10)<<"DEBIT"<<endl;
+			pattern_spaces (4); cout<<setw(30)<<"USERNAME"<<setw(20)<<"NAME"<<setw(30)<<"PHONE NUMBER"<<setw(10)<<"DEBIT"<<endl;
 			while(customer >> username >> name >> email >> phone >> Password >>debit){
-				pattern_spaces (4); cout<<setw(15)<<username<<setw(15)<<name<<setw(20)<<phone<<setw(10)<<debit<<endl;
+				pattern_spaces (4); cout<<setw(30)<<username<<setw(20)<<name<<setw(30)<<phone<<setw(10)<<debit<<endl;
 			}
 		}
 		else{
@@ -252,7 +288,7 @@ public:
    		switch (choice){
    			case 1:	modify_package();
    				break;
-   			case 2:	pattern_spaces (4); cout<<"1. NATIONAL"<<endl; pattern_spaces (4); cout<<"2. INTERNATIONAL"; cin>>ch; cout<<endl;
+   			case 2:	pattern_spaces (4); cout<<"1. NATIONAL"<<endl; pattern_spaces (4); cout<<"2. INTERNATIONAL "; cin>>ch; cout<<endl;
    				switch (ch){
    					case 1 :	modify_nationalDest();
    						break;
@@ -288,7 +324,8 @@ public:
 		pattern_spaces (4); cout<<"ENTER PHONE NUMBER : "; cin>>phone; cout<<endl;
 		pattern_spaces (4); cout<<"ENTER PASSWORD : "; cin>>Password; printStrongNess(Password);
 		pattern_spaces (4); cout<<"ENTER HOW MUCH DEBIT YOU HAVE : "; cin>>debit;
-		ofstream customer("customerDetails.txt");
+		ofstream customer;
+		customer.open("customerDetails.txt", ios_base::app);
 		if (customer.good()){
 			customer << username << " " << name << " " << email << " " << phone << " " << Password << " " << debit << endl;
 		}
@@ -307,9 +344,9 @@ public:
    			i = 1;
    			pattern_spaces (4); pattern_line (60); pattern_spaces (4); pattern_line (60);
 			pattern_spaces (10); cout<<"INDIA"<<endl; pattern_spaces (4); pattern_line (60);
-			pattern_spaces (4); cout<<setw(3)<<"SNo"<<setw(10)<<"CITY CODE"<<setw(15)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
+			pattern_spaces (4); cout<<setw(8)<<"SNo"<<setw(20)<<"CITY CODE"<<setw(20)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
    			while (national >> city_code >> city >> rating >> price){
-				pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(15)<<city<<setw(30)<<rating<<endl;
+				pattern_spaces (4); cout<<setw(8)<<i<<setw(20)<<city_code<<setw(20)<<city<<setw(30)<<rating<<endl;
 				i++;
 			}
 			get_nationalDest();
@@ -326,9 +363,9 @@ public:
    			i = 1;
 		   	pattern_spaces (4); pattern_line (60); pattern_spaces (4); pattern_line (60);
 		   	pattern_spaces (11); cout<<"INTERNATIONAL"<<endl; pattern_spaces (4); pattern_line (60);
-		   	pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(30)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
+		   	pattern_spaces (4); cout<<setw(8)<<"S No"<<setw(20)<<"CITY Code"<<setw(30)<<"CITY"<<setw(30)<<"RATINGS"<<endl;
 		   	while (international >> city_code >> city >> rating >> price){
-		   		pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(30)<<city<<setw(30)<<rating<<endl;
+		   		pattern_spaces (4); cout<<setw(8)<<i<<setw(20)<<city_code<<setw(30)<<city<<setw(30)<<rating<<endl;
 				i++;
 			}
 			get_internationalDest();
@@ -347,9 +384,9 @@ public:
 		   	while (national >> city_code >> city >> rating >> price){
 		   		if (city_code_P == city_code){
 		   			pattern_spaces (4); pattern_line (60);
-		   			pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(15)<<"CITY"<<setw(30)<<"RATINGS"<<setw(10)<<"PRICE"<<endl;
-		   			pattern_spaces (4); cout<<setw(15)<<city_code<<setw(15)<<city<<setw(30)<<rating<<setw(10)<<price<<endl<<endl;
-		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"; cin>>choice; cout<<endl;
+		   			pattern_spaces (4); cout<<setw(25)<<"CITY Code"<<setw(30)<<"CITY"<<setw(30)<<"RATINGS"<<setw(20)<<"PRICE"<<endl;
+		   			pattern_spaces (4); cout<<setw(25)<<city_code<<setw(30)<<city<<setw(30)<<rating<<setw(20)<<price<<endl<<endl;
+		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO) "; cin>>choice; cout<<endl;
 		   			if (choice == 1){
 		   				payment_mode(package_price);
 		   				return;
@@ -371,9 +408,9 @@ public:
 		   	while (international >> city_code >> city >> rating >> price){
 		   		if (city_code_P == city_code){
 		   			pattern_spaces (4); pattern_line (60);
-		   			pattern_spaces (4); cout<<setw(15)<<"CITY Code"<<setw(15)<<"CITY"<<setw(30)<<"RATINGS"<<setw(10)<<"PRICE"<<endl;
-		   			pattern_spaces (4); cout<<setw(15)<<city_code<<setw(15)<<city<<setw(30)<<rating<<setw(10)<<price<<endl<<endl;
-		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"; cin>>choice; cout<<endl;
+		   			pattern_spaces (4); cout<<setw(25)<<"CITY Code"<<setw(30)<<"CITY"<<setw(30)<<"RATINGS"<<setw(20)<<"PRICE"<<endl;
+		   			pattern_spaces (4); cout<<setw(25)<<city_code<<setw(30)<<city<<setw(30)<<rating<<setw(20)<<price<<endl<<endl;
+		   			pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO) "; cin>>choice; cout<<endl;
 		   			if (choice == 1){
 		   				payment_mode(package_price);
 		   				return;
@@ -397,10 +434,10 @@ public:
 	   		i = 1;
 			pattern_spaces (4); pattern_line (60);
    			pattern_spaces (10); cout<<"PACKAGES JUST FOR YOU"<<endl; pattern_spaces (4); pattern_line (60);
-   			pattern_spaces (4); cout<<setw(13)<<"PACKAGE CODE"<<setw(20)<<"PACKAGE TYPE"<<setw(30)<<"PACKAGE TIME"<<setw(6)<<"PRICE"<<endl;
+   			pattern_spaces (4); cout<<setw(13)<<"PACKAGE CODE"<<setw(20)<<"PACKAGE TYPE"<<setw(30)<<"PACKAGE TIME"<<setw(20)<<"PRICE"<<endl;
    			pattern_spaces (4); pattern_line (60);
    			while (package >> city_code >> package_type >> package_time >> package_price){
-				pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(20)<<package_type<<setw(30)<<package_time<<setw(6)<<package_price<<endl;
+				pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(20)<<package_type<<setw(30)<<package_time<<setw(20)<<package_price<<endl;
 				i++;
 			}
 			pattern_spaces (4); pattern_line (60);
@@ -408,8 +445,8 @@ public:
 			while (package >> city_code >> package_type >> package_time >> package_price){
 				if (city_code_P == city_code){
 					pattern_spaces (4); pattern_line (60);
-					pattern_spaces (4); cout<<setw(13)<<"PACKAGE CODE"<<setw(20)<<"PACKAGE TYPE"<<setw(30)<<"PACKAGE TIME"<<setw(6)<<"PRICE"<<endl;
-					pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(20)<<package_type<<setw(30)<<package_time<<setw(6)<<package_price<<endl;
+					pattern_spaces (4); cout<<setw(13)<<"PACKAGE CODE"<<setw(20)<<"PACKAGE TYPE"<<setw(30)<<"PACKAGE TIME"<<setw(20)<<"PRICE"<<endl;
+					pattern_spaces (4); cout<<setw(3)<<i<<setw(10)<<city_code<<setw(20)<<package_type<<setw(30)<<package_time<<setw(20)<<package_price<<endl;
 					pattern_spaces (4); cout<<"CONTINUE TO PAYMENT : (1 for YES || 0 for NO)"; cin>>choice; cout<<endl;
 		   			if (choice == 1){
 		   				payment_mode(package_price);
@@ -425,7 +462,8 @@ public:
 //------------------------------------------------------------------PAYMENT FUNCTION-------------------------------------------------------------------
 
 void payment_mode(int n){
-	fstream customer("customerDetails.txt");
+	fstream customer;
+	customer.open("customerDetails.txt", ios_base::app);
 	if (customer.good()){
 		customer >> username >> name >> email >> phone >> Password >> debit;
 		debit -= n;
