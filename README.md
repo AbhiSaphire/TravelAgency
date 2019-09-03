@@ -1,6 +1,6 @@
 # Project Title
 ## Travel Agency Application
-_This is a Travel/Tourism agency project using file handling **(in progress)**_
+_This is a Travel/Tourism agency project using file handling
 ### Project description goes here:
 #### Getting Started
 This is a C++ project which uses files as a database.
